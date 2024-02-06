@@ -1,9 +1,9 @@
 import tkinter
 import math
 
-from tktimepicker import constants
+from . import constants
 from typing import Union
-from tktimepicker.spinlabel import SpinLabel, PeriodLabel
+from .spinlabel import SpinLabel, PeriodLabel
 
 
 class BaseClock:

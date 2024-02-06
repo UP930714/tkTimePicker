@@ -2,9 +2,9 @@ import tkinter
 
 from typing import Tuple
 from tkinter import ttk
-from tktimepicker import basetimepicker
-from tktimepicker import constants
-from tktimepicker.spinlabel import SpinLabel, LabelGroup, PeriodLabel
+from . import basetimepicker
+from . import constants
+from .spinlabel import SpinLabel, LabelGroup, PeriodLabel
 
 
 class AnalogPicker(tkinter.Frame):  # Creates the fully functional clock timepicker
