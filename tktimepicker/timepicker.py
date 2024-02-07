@@ -147,24 +147,31 @@ class SpinTimePickerOld(basetimepicker.SpinBaseClass):
         reg12hrs = self.register(self.validate12hrs)
         reg24hrs = self.register(self.validate24hrs)
         regMin = self.register(self.validateMinutes)
+        dataPRINTERE = self.register(self.dataPrinter)
 
         self.period_var = tkinter.StringVar(self, value="a.m")
         self.period_var.trace("w", self.validatePeriod)
 
         self._12HrsTime = tkinter.Spinbox(self, increment=1, from_=1, to=12,
-                                          validate="all", validatecommand=(reg12hrs, "%P"),
+                                          validate="focusout", validatecommand=(reg12hrs, "%P"),
                                           command=lambda: self._12HrsTime.event_generate("<<Changed12Hrs>>"))
 
         self._24HrsTime = tkinter.Spinbox(self, increment=1, from_=0, to=23,
                                           validate="all", validatecommand=(reg24hrs, "%P"),
-                                          command=lambda: self._24HrsTime.event_generate("<<Changed24Hrs>>"))
+                                          command=lambda: [self.dataPrinter("%P"),self._24HrsTime.event_generate("<<Changed24Hrs>>")])
 
         self._minutes = tkinter.Spinbox(self, increment=1, from_=0, to=59,
-                                        validate="all", validatecommand=(regMin, "%P"),
+                                        validate="focusout", validatecommand=(regMin, "%P"),
                                         command=lambda: self._minutes.event_generate("<<ChangedMins>>"))
 
         self._period = ttk.Combobox(self, values=["a.m", "p.m"], textvariable=self.period_var)
         self._period.bind("<<ComboboxSelected>>", lambda a: self._minutes.event_generate("<<ChangedPeriod>>"))
+
+    def dataPrinter(self, value):
+        if len(value) < 2:
+            value = "0"+value
+        print("Completed")
+        print("WoW" ,self._24HrsTime.get())
 
     def addHours12(self):
         self._12HrsTime.pack(expand=True, fill="both", side=self.orient)
